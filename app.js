@@ -1,3 +1,4 @@
+//Basic math functions
 const add = function (num1, num2) {
   return num1 + num2;
 };
@@ -6,22 +7,29 @@ const subtract = function (num1, num2) {
   return num1 - num2;
 };
 
-const multiply = function (nums) {
-  let multinums = 1;
-  for (let num of nums) {
-    multinums *= Number(num);
-  }
-  return multinums;
+const multiply = function (num1, num2) {
+  return num1 * num2;
 };
 
-const divide = function (nums) {
-  let divnums = 1;
-  for (let num of nums) {
-    divnums /= Number(num);
-  }
-  return divnums;
+const divide = function (num1, num2) {
+  return num1 / num2;
 };
-
+//varibles
+let num1 = 0;
+let operator = "";
+let num2 = 0;
+// Operate function to call the math functions after checking the operator
+function operate(num1, operator, num2) {
+  if (operator === "+") {
+    add(num1, num2);
+  } else if (operator === "-") {
+    subtract(num1, num2);
+  } else if (operator === "*") {
+    multiply(num1, num2);
+  } else if (operator === "/") {
+    divide(num1, num2);
+  }
+}
 //   const power = function (int, power) {
 //     let result = 1;
 //     for (let i = 0; i < power; i++) {
