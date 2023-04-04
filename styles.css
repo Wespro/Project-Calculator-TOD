@@ -3,3 +3,58 @@
   padding: 0;
   box-sizing: border-box;
 }
+header {
+  text-align: center;
+  padding: 3rem 0 1rem;
+}
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.calculator {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 35rem;
+  height: 45rem;
+  border: 5px solid;
+}
+.screen {
+  min-height: 8rem;
+  border: 3px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+.calcBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+.firstLine {
+  display: flex;
+}
+.secLine {
+  display: flex;
+}
+.thirdline {
+  display: flex;
+}
+.lastline {
+  display: flex;
+}
+.digit,
+.operator {
+  width: 9rem;
+  height: 8rem;
+  background-color: aqua;
+  border: 2px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
