@@ -46,19 +46,6 @@ main {
   border-radius: 40px;
 }
 
-/* .Opertor {
-  border: none;
-  width: 3.5rem;
-  height: 3.5rem;
-  background-color: #ffffff;
-  margin: 0 0 0rem;
-  font-size: 3rem;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
-} */
 .calcBody {
   display: flex;
   flex-direction: column;
@@ -121,4 +108,7 @@ main {
 }
 .del:hover {
   background-color: rgb(199, 199, 199);
+}
+.activeOpertator {
+  background-color: rgb(255, 102, 0);
 }
