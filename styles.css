@@ -39,7 +39,7 @@ main {
 }
 .screen {
   border: none;
-  min-height: 2rem;
+  min-height: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
