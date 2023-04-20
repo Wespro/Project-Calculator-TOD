@@ -60,12 +60,47 @@ function getCalcValues(e) {
         } else if (num2 === "") {
           Result.textContent += e.target.textContent;
           num1 = Result.innerText;
-          console.log("hasd");
         }
       }
     }
   }
 }
+//keyboard
+window.addEventListener("keydown", (e) => {
+  const key = document.querySelector(`button[data-key ="${e.key}"]`);
+  if (key) {
+    if (key.classList.contains("button")) {
+      if (key.classList.contains("operator")) {
+        toggleOperator(e, key);
+        equalsIfOperator(e, key);
+        lastValue = key.textContent;
+      } else if (key.classList.contains("equals")) {
+        equals(e);
+        lastValue = result;
+      } else if (key.classList.contains("clear")) {
+        clear();
+      } else if (key.classList.contains("digit")) {
+        enterNum(e, key);
+        if ((lastValue === "" && operator !== "") || lastValue === operator) {
+          lastValue = key.textContent;
+        } else {
+          lastValue += key.textContent;
+        }
+      } else if (key.classList.contains("del")) {
+        del(e);
+      } else if (key.classList.contains("dot")) {
+        lastValue = key.textContent;
+        if (num2 !== "" && operator !== "") {
+          Result.textContent += key.textContent;
+          num2 += key.textContent;
+        } else if (num2 === "") {
+          Result.textContent += key.textContent;
+          num1 = Result.innerText;
+        }
+      }
+    }
+  }
+});
 // Operate function to call the math functions after checking the operator
 function operate(num1, operator, num2) {
   if (operator === "+") {
@@ -79,20 +114,20 @@ function operate(num1, operator, num2) {
   }
 }
 
-function equalsIfOperator(e) {
+function equalsIfOperator(e, key) {
   if (num2 !== "" && num1 !== "" && operator !== "" && result === "") {
     result = Math.round(operate(num1, operator, num2) * 100) / 100;
     num1 = "";
     num2 = "";
     Result.textContent = result;
-    operator = e.target.textContent;
+    operator = e.type === "click" ? e.target.textContent : key.textContent;
   } else if (result !== "" && num1 !== "" && num2 === "" && operator !== "") {
     result = Math.round(operate(result, operator, num1) * 100) / 100;
     num1 = "";
     Result.textContent = result;
-    operator = e.target.textContent;
+    operator = e.type === "click" ? e.target.textContent : key.textContent;
   } else {
-    operator = e.target.textContent;
+    operator = e.type === "click" ? e.target.textContent : key.textContent;
     Result.textContent = "";
   }
 }
@@ -123,32 +158,38 @@ function clear() {
   });
 }
 
-function enterNum(e) {
+function enterNum(e, key) {
   if (Result.textContent === "0" || (num1 === "" && result !== "")) {
-    Result.textContent = e.target.textContent;
-    num1 = e.target.textContent;
+    Result.textContent =
+      e.type === "click" ? e.target.textContent : key.textContent;
+    num1 = e.type === "click" ? e.target.textContent : key.textContent;
   } else {
     if (operator !== "" && num1 !== "") {
       if (num2 === "" && result === "") {
-        Result.textContent = e.target.textContent;
-        num2 = e.target.textContent;
+        Result.textContent =
+          e.type === "click" ? e.target.textContent : key.textContent;
+        num2 = e.type === "click" ? e.target.textContent : key.textContent;
       } else if (num2 !== "" && result !== "") {
-        Result.textContent += e.target.textContent;
-        num2 += e.target.textContent;
+        Result.textContent +=
+          e.type === "click" ? e.target.textContent : key.textContent;
+        num2 += e.type === "click" ? e.target.textContent : key.textContent;
       } else if (num2 !== "" && result === "") {
-        Result.textContent += e.target.textContent;
-        num2 += e.target.textContent;
+        Result.textContent +=
+          e.type === "click" ? e.target.textContent : key.textContent;
+        num2 += e.type === "click" ? e.target.textContent : key.textContent;
       } else {
-        Result.textContent += e.target.textContent;
-        num1 += e.target.textContent;
+        Result.textContent +=
+          e.type === "click" ? e.target.textContent : key.textContent;
+        num1 += e.type === "click" ? e.target.textContent : key.textContent;
       }
     } else {
       if (num1 === "") {
         num1 = "";
       }
-      Result.textContent += e.target.textContent;
+      Result.textContent +=
+        e.type === "click" ? e.target.textContent : key.textContent;
 
-      num1 += e.target.textContent;
+      num1 += e.type === "click" ? e.target.textContent : key.textContent;
     }
   }
 }
@@ -178,115 +219,67 @@ function del(e) {
 }
 
 //hightliting the opertartor on UI
-function toggleOperator(e) {
+function toggleOperator(e, key) {
   operators.forEach((item) => {
     item.classList.remove("activeOpertator");
   });
-  e.target.classList.toggle("activeOpertator");
+  e.type === "click"
+    ? e.target.classList.toggle("activeOpertator")
+    : key.classList.toggle("activeOpertator");
 }
 
-//keyboard
-window.addEventListener("keydown", (e) => {
-  const key = document.querySelector(`button[data-key ="${e.key}"]`);
-  if (key) {
-    if (key.classList.contains("button")) {
-      if (key.classList.contains("operator")) {
-        toggleOperatorKeys(e, key);
-        equalsIfOperatorKeys(e, key);
-        lastValue = key.textContent;
-      } else if (key.classList.contains("equals")) {
-        equalsKeys(e, key);
-        lastValue = result;
-      } else if (key.classList.contains("clear")) {
-        clear();
-      } else if (key.classList.contains("digit")) {
-        enterNumKeys(e, key);
-        if ((lastValue === "" && operator !== "") || lastValue === operator) {
-          lastValue = key.textContent;
-        } else {
-          lastValue += key.textContent;
-        }
-      } else if (key.classList.contains("del")) {
-        del(e);
-      } else if (key.classList.contains("dot")) {
-        lastValue = key.textContent;
-        if (num2 !== "" && operator !== "") {
-          Result.textContent += key.textContent;
-          num2 += key.textContent;
-        } else if (num2 === "") {
-          Result.textContent += key.textContent;
-          num1 = Result.innerText;
-        }
-      }
-    }
-  }
-});
-function equalsIfOperatorKeys(e, key) {
-  if (num2 !== "" && num1 !== "" && operator !== "" && result === "") {
-    result = Math.round(operate(num1, operator, num2) * 100) / 100;
-    num1 = "";
-    num2 = "";
-    Result.textContent = result;
-    operator = key.textContent;
-  } else if (result !== "" && num1 !== "" && num2 === "" && operator !== "") {
-    result = Math.round(operate(result, operator, num1) * 100) / 100;
-    num1 = "";
-    Result.textContent = result;
-    operator = key.textContent;
-  } else {
-    operator = key.textContent;
-    Result.textContent = "";
-  }
-}
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// function equalsIfOperatorKeys(e, key) {
+//   if (num2 !== "" && num1 !== "" && operator !== "" && result === "") {
+//     result = Math.round(operate(num1, operator, num2) * 100) / 100;
+//     num1 = "";
+//     num2 = "";
+//     Result.textContent = result;
+//     operator = key.textContent;
+//   } else if (result !== "" && num1 !== "" && num2 === "" && operator !== "") {
+//     result = Math.round(operate(result, operator, num1) * 100) / 100;
+//     num1 = "";
+//     Result.textContent = result;
+//     operator = key.textContent;
+//   } else {
+//     operator = key.textContent;
+//     Result.textContent = "";
+//   }
+// }
 
-function equalsKeys(e, key) {
-  if (num2 !== "" && num1 !== "" && operator !== "" && result === "") {
-    result = Math.round(operate(num1, operator, num2) * 100) / 100;
-    num1 = "";
-    num2 = "";
-    Result.textContent = result;
-    operator = "";
-  } else if (result !== "" && num1 !== "" && num2 === "" && operator !== "") {
-    result = Math.round(operate(result, operator, num1) * 100) / 100;
-    num1 = "";
-    Result.textContent = result;
-    operator = "";
-  }
-}
+// function enterNumKeys(e, key) {
+//   if (Result.textContent === "0" || (num1 === "" && result !== "")) {
+//     Result.textContent = key.textContent;
+//     num1 = key.textContent;
+//   } else {
+//     if (operator !== "" && num1 !== "") {
+//       if (num2 === "" && result === "") {
+//         Result.textContent = key.textContent;
+//         num2 = key.textContent;
+//       } else if (num2 !== "" && result !== "") {
+//         Result.textContent += key.textContent;
+//         num2 += key.textContent;
+//       } else if (num2 !== "" && result === "") {
+//         Result.textContent += key.textContent;
+//         num2 += key.textContent;
+//       } else {
+//         Result.textContent += key.textContent;
+//         num1 += key.textContent;
+//       }
+//     } else {
+//       if (num1 === "") {
+//         num1 = "";
+//       }
+//       Result.textContent += key.textContent;
 
-function enterNumKeys(e, key) {
-  if (Result.textContent === "0" || (num1 === "" && result !== "")) {
-    Result.textContent = key.textContent;
-    num1 = key.textContent;
-  } else {
-    if (operator !== "" && num1 !== "") {
-      if (num2 === "" && result === "") {
-        Result.textContent = key.textContent;
-        num2 = key.textContent;
-      } else if (num2 !== "" && result !== "") {
-        Result.textContent += key.textContent;
-        num2 += key.textContent;
-      } else if (num2 !== "" && result === "") {
-        Result.textContent += key.textContent;
-        num2 += key.textContent;
-      } else {
-        Result.textContent += key.textContent;
-        num1 += key.textContent;
-      }
-    } else {
-      if (num1 === "") {
-        num1 = "";
-      }
-      Result.textContent += key.textContent;
+//       num1 += key.textContent;
+//     }
+//   }
+// }
 
-      num1 += key.textContent;
-    }
-  }
-}
-
-function toggleOperatorKeys(e, key) {
-  operators.forEach((item) => {
-    item.classList.remove("activeOpertator");
-  });
-  key.classList.toggle("activeOpertator");
-}
+// function toggleOperatorKeys(e, key) {
+//   operators.forEach((item) => {
+//     item.classList.remove("activeOpertator");
+//   });
+//   key.classList.toggle("activeOpertator");
+// }

@@ -65,18 +65,14 @@ main {
   align-self: center;
   gap: 0.2rem;
 }
-.firstLine {
-  display: flex;
-  flex: 1;
-}
-.secLine {
-  display: flex;
-}
-.thirdline {
-  display: flex;
-}
+.secLine,
+.firstLine,
+.thirdline,
 .lastline {
   display: flex;
+}
+.firstLine,
+.lastline {
   flex: 1;
 }
 
